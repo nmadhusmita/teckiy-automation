@@ -21,7 +21,7 @@ class Basic_Automation:
     def login(self, browser=None):
         driver = self.open_site()
         # Find the Login button by xpath and click
-        driver.find_element_by_xpath("//*[@id=\"navbarsExampleDefault\"]/button/a").click()
+        driver.find_element_by_xpath("/html/body/div[1]/nav/form[2]/button").click()
 
         # fill username in the box
         username = driver.find_element_by_xpath("//*[@id='id_login']")
@@ -58,9 +58,9 @@ class Basic_Automation:
 
     def log_out(self):
         driver = self.search_question_or_blog("Python")
-        logout = driver.find_element_by_id("dropdownMenuButton").
-
-        driver.find_element_by_xpath("//*[@id=\"navbarsExampleDefault\"]/div/div/a")
+        # logout = driver.find_element_by_id("dropdownMenuButton").
+        #
+        # driver.find_element_by_xpath("//*[@id=\"navbarsExampleDefault\"]/div/div/a")
         #//*[@id="navbarsExampleDefault"]/div/form
         #//*[@id="navbarsExampleDefault"]/div
         ##navbarsExampleDefault > div > div > form > input[type=hidden]
