@@ -1,4 +1,3 @@
-import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
@@ -6,6 +5,17 @@ class Basic_Automation:
 
     def __init__(self):
         pass
+
+    def select_from_dropdown(self, driver, select_id, visible_text, value):
+        select = Select(driver.find_element_by_id(select_id))
+        # select by visible text
+        select.select_by_visible_text(visible_text)
+        # select by value
+        select.select_by_value(value)
+
+    def switch_to_new_window(self, driver):
+        newURl = driver.window_handles
+        driver.switch_to.window(newURl[0])
 
     def get_chrome_driver(self):
         # Get chrome driver
@@ -35,94 +45,89 @@ class Basic_Automation:
 
         login_button = driver.find_element_by_xpath('/html/body/div[1]/div/div[2]/form/div[3]/button')
         login_button.click()
-
         return driver
 
-    def search_question_or_blog(self, search_str):
+    def submit_ticket(self):
         driver = self.login()
-        # Click on the login button
+        driver.find_element_by_link_text("Submit Ticket").click()
 
+        self.switch_to_new_window(driver)
+
+        title_text = driver.find_element_by_xpath("//*[@id=\"id_title\"]")
+        # Set Title
+        title_text.send_keys("Created By Automation Tool - DJango1")
+
+        try:
+            import time
+            time.sleep(5)
+            frame = driver.find_element_by_class_name("cke_wysiwyg_frame")
+            driver.switch_to.frame(frame)
+            text_area = driver.find_element_by_xpath("/html/body/p")
+
+            text_area.click()
+
+            text_area.send_keys("How to automate teckiy.com using Selenium with python3.8??")
+
+            driver.switch_to.parent_frame()
+
+            # Select Ticket Type : Question/Blog
+            self.select_from_dropdown(driver, 'id_ticket_type', 'Question', 'Q')
+
+            # Select Area : Question/Blog
+            self.select_from_dropdown(driver, 'id_category', 'Python', 'P')
+
+            # Select Priority : Question/Blog
+            self.select_from_dropdown(driver, 'id_priority', 'Low', 'L')
+
+            driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/form/button").click()
+
+            assert True
+        except Exception as e:
+            print(str(e))
+            pass
+        return driver
+
+
+    def search_question_or_blog(self, search_str):
+        driver = self.submit_ticket()
+
+        # Click on the login button
         search_box = driver.find_element_by_xpath("//*[@id=\"mySearch\"]")
         search_box.send_keys(search_str)
         search_box.submit()
 
         table = driver.find_elements_by_xpath("/html/body/div[1]/div/div[2]/table/tbody/tr[1]/td[1]/span/h6/a")  # finds webresults
         table[0].click()
+        print("After clicking the search link")
 
-        # body = driver.find_element_by_xpath("//*[@id=\"cke_id_comment\"]")
-        # body.click()
-        # body.send_keys("teckiy")
-        # assert True
+        try:
+            import time
+            time.sleep(2)
+            frame = driver.find_element_by_class_name("cke_wysiwyg_frame")
+            driver.switch_to.frame(frame)
+            text_area = driver.find_element_by_xpath("/html/body/p")
+
+            text_area.click()
+
+            text_area.send_keys("Comment from automation code")
+            driver.switch_to.parent_frame()
+            driver.find_element_by_id("commentmsgtest").click()
+            assert True
+        except Exception as e:
+            print(str(e))
+            pass
+
+
         return driver
 
 
     def log_out(self):
-        driver = self.search_question_or_blog("Python")
-        # logout = driver.find_element_by_id("dropdownMenuButton").
-        #
-        # driver.find_element_by_xpath("//*[@id=\"navbarsExampleDefault\"]/div/div/a")
-        #//*[@id="navbarsExampleDefault"]/div/form
-        #//*[@id="navbarsExampleDefault"]/div
-        ##navbarsExampleDefault > div > div > form > input[type=hidden]
+        driver = self.search_question_or_blog("python3.8")
         assert True
 
 
-    def create_an_account(self):
-        driver = self.open_site()
-        # Find the Login button by xpath and click
-        driver.find_element_by_xpath("//*[@id=\"navbarsExampleDefault\"]/button/a").click()
-        # Navigate to Signup Page
-        element = driver.find_element_by_link_text("Create an Account!")
-        element.click()
+if __name__ == '__main__':
+    auto = Basic_Automation()
+    auto.search_question_or_blog("python3.8")
+    # auto.log_out()
 
-        newURl = driver.window_handles
-        driver.switch_to.window(newURl[0])
-
-        button = driver.find_element_by_xpath('/html/body/div[1]/div[1]/div/div[2]/div/div[2]/form/div[3]/button')
-        button.click()
-
-        # fill username in the box
-        username = driver.find_element_by_xpath("//*[@id=\"id_email\"]")
-        username.clear()
-        username.send_keys("nmadhusmita018@gmail.com")
-        time.sleep(2)
-
-        # fill password in the box
-        password = driver.find_element_by_xpath("//*[@id=\"id_password1\"]")
-        password.clear()
-        password.send_keys('Devansh@7')
-        time.sleep(2)
-
-        # Confirm password in the box
-        password = driver.find_element_by_xpath("//*[@id=\"id_password2\"]")
-        password.clear()
-        password.send_keys('Devansh@7')
-        time.sleep(2)
-
-        # click on sign up page
-        sign_up_button = driver.find_element_by_xpath('/html/body/div[1]/div[1]/div/div[2]/div/div[2]/form/div[3]/button')
-        sign_up_button.click()
-
-        time.sleep(20)
-        driver.close()
-
-        # Test Case: create_an_account in teckiy.com
-
-        # logout from Teckiy
-        # logout = driver.find_element_by_id("userNavigationLabel")
-        # logout.click()
-        # logout1 = driver.find_element_by_class_name("uiLinkButtonInput")  # error in this line
-        # logout1.click()
-        #
-        # time.sleep(5)
-        #
-        # driver.quit()
-
-
-auto = Basic_Automation()
-auto.log_out()
-# auto.search_question_or_blog("Python")
-
-# Test Case: Login To teckiy.com
-# auto = Basic_Automation()
-# auto.login()
