@@ -31,7 +31,7 @@ class OpenAndEditAccountPageTest(unittest.TestCase):
 
     def tearDown(self):
         self.driver.back()
-        UtilityTool.test_sign_out()
+        UtilityTool.test_sign_out(self.driver)
         print("Navigating back in tearDown method")
 
 

@@ -3,7 +3,7 @@ from selenium import webdriver
 from utility import UtilityTool
 
 
-class AddACommentTest(unittest.TestCase):
+class GiveASuggestionTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -18,31 +18,24 @@ class AddACommentTest(unittest.TestCase):
     '''
       This test case covers the following use case:
       1- Login to teckiy.com 
-      2- Search using a keyword
-      3- Open a link from the search result
-      4- Add a comment to the ticket
+      2- Submit a suggestion
     '''
-    def test_search_open_and_add_comment_in_a_ticket(self):
+    def test_submit_a_suggestion(self):
         driver = self.driver
-        # Search using the given string 'DJango4'
-        search_box = driver.find_element_by_xpath("//*[@id=\"mySearch\"]")
-        search_box.send_keys("DJango4")
-        search_box.submit()
-
-        # Open the first link from search result
-        search_result_link = driver.find_element_by_xpath("/html/body/div[1]/div[3]/div[1]/div[2]/div[2]/a")
-        search_result_link.click()
         try:
-            ask_doubt = driver.find_element_by_id("ask-doubt")
-            ask_doubt.click()
-            text_area = driver.find_element_by_id("exampleFormControlTextarea1")
-            text_area.click()
-            text_area.send_keys("Can u check your question?")
-            driver.find_element_by_id("another-btn").click()
+            driver.find_element_by_link_text("Suggestions").click()
+            UtilityTool.switch_to_new_window(driver)
+            email_address_text = driver.find_element_by_xpath("//*[@id=\"id_email_id\"]")
+            email_address_text.send_keys("nmadhu@gmail.com")
+
+            content_text_area = driver.find_element_by_xpath("//*[@id=\"id_content\"]")
+            content_text_area.send_keys("We should make it more user friendly...")
+
+            submit_btn = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div/div[2]/form/button")
+            submit_btn.click()
             assert True
-            print("-- Successfully added a comment in a link")
         except Exception as e:
-            print(str(e))
+            print("ERROR:: Unable to submit a suggestion - ", str(e))
             pass
 
     @classmethod
