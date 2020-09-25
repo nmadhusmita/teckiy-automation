@@ -4,6 +4,15 @@ from selenium.webdriver.support.ui import Select
 class UtilityTool:
 
     @staticmethod
+    def test_sign_out(driver):
+        try:
+            driver.find_element_by_id("dropdownMenu2").click()
+            driver.find_element_by_xpath("/html/body/div[1]/nav/div[3]/form/button").click()
+            assert True
+        except Exception as e:
+            print("Error:: Unable to sign out....", str(e))
+
+    @staticmethod
     def switch_to_new_window(driver):
         new_url = driver.window_handles
         driver.switch_to.window(new_url[0])

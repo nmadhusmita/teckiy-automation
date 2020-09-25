@@ -46,8 +46,7 @@ class CreateTicketTest(unittest.TestCase):
             # Select Priority : Question/Blog
             UtilityTool.select_from_dropdown(driver, 'id_priority', 'Low', 'L')
 
-            driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/form/button").click()
-
+            driver.find_element_by_xpath("/html/body/div[1]/div[2]/div/div[2]/form/button").click()
             assert True
             print("-- Successfully created a new ticket")
         except Exception as e:
@@ -61,6 +60,7 @@ class CreateTicketTest(unittest.TestCase):
 
     def tearDown(self):
         self.driver.back()
+        UtilityTool.test_sign_out()
         print("Navigating back in tearDown method")
 
 
