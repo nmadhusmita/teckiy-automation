@@ -1,6 +1,6 @@
 import unittest
 from selenium import webdriver
-from utility import UtilityTool
+from test.utility import UtilityTool
 
 
 class SubmitAnAnswerTestFF(unittest.TestCase):

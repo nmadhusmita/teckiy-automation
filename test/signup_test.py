@@ -1,7 +1,7 @@
 from selenium import webdriver
 import time
 import unittest
-from utility import UtilityTool
+from test.utility import UtilityTool
 
 
 class SignupTest(unittest.TestCase):
