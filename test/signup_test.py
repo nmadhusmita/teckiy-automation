@@ -46,7 +46,7 @@ class SignupTest(unittest.TestCase):
         password.clear()
         password.send_keys('Devansh@7')
         time.sleep(2)
-
+        
         # click on sign up page
         sign_up_button = driver.find_element_by_xpath(
             '/html/body/div[1]/div[1]/div/div[2]/div/div[2]/form/div[3]/button')

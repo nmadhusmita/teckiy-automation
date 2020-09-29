@@ -4,7 +4,7 @@ import unittest
 import time
 
 
-class CreateTicketTest(unittest.TestCase):
+class EditATicketTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(executable_path=r'D:\\Code\\chromedriver85\\chromedriver.exe')
@@ -15,15 +15,28 @@ class CreateTicketTest(unittest.TestCase):
         UtilityTool.login(driver)
         print("Logged into teckiydev.herokuapp.com in setUp method")
 
-    def test_submit_a_ticket(self):
+    def test_edit_a_ticket(self):
         driver = self.driver
-        driver.find_element_by_link_text("Submit Ticket").click()
+        # Search using the given string 'DJango4'
+        search_box = driver.find_element_by_xpath("//*[@id=\"mySearch\"]")
+        search_box.send_keys("DJango4")
+        search_box.submit()
+
+        # Open the first link from search result
+        search_result_link = driver.find_element_by_xpath("/html/body/div[1]/div[3]/div[1]/div[2]/div[2]/a")
+        search_result_link.click()
+
+        UtilityTool.switch_to_new_window(driver)
+
+        # Click on edit button
+        driver.find_element_by_xpath("/html/body/div[1]/div[3]/div/div[2]/div[2]/div[1]/span/a").click()
 
         UtilityTool.switch_to_new_window(driver)
 
         title_text = driver.find_element_by_xpath("//*[@id=\"id_title\"]")
         # Set Title
-        title_text.send_keys("Created By Automation Tool - DJango4")
+        title_text.clear()
+        title_text.send_keys("Created By Automation Tool - DJango")
 
         try:
             time.sleep(5)
@@ -33,22 +46,20 @@ class CreateTicketTest(unittest.TestCase):
 
             text_area.click()
 
-            text_area.send_keys("How to automate teckiy.com using Selenium with python3.8??")
+            text_area.send_keys(" How to automate teckiy.com ????")
 
             driver.switch_to.parent_frame()
 
             # Select Ticket Type : Question/Blog
-            UtilityTool.select_from_dropdown(driver, 'id_ticket_type', 'Question', 'Q')
+            UtilityTool.select_from_dropdown(driver, 'id_ticket_type', 'Task', 'T')
 
             # Select Area : Question/Blog
-            UtilityTool.select_from_dropdown(driver, 'id_category', 'Python', 'python')
+            UtilityTool.select_from_dropdown(driver, 'id_category', 'SQL', 'sql')
 
-            # Select Priority : Question/Blog
-            UtilityTool.select_from_dropdown(driver, 'id_priority', 'Low', 'L')
-
-            driver.find_element_by_xpath("/html/body/div[1]/div[2]/div/div[2]/form/button").click()
+            # Click on update
+            driver.find_element_by_xpath("//*[@id=\"commentmsgtest\"]").click()
             assert True
-            print("-- Successfully created a new ticket")
+            print("-- Successfully edited a ticket")
         except Exception as e:
             print(str(e))
             pass

@@ -18,7 +18,7 @@ class UtilityTool:
         driver.switch_to.window(new_url[0])
 
     @staticmethod
-    def login(driver, browser=None):
+    def login(driver):
         driver.get("https://teckiydev.herokuapp.com/")
         # Find the Login button by xpath and click
         driver.find_element_by_xpath("/html/body/div[1]/nav/form[2]/button").click()
