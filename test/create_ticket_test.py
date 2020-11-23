@@ -1,7 +1,6 @@
 from selenium import webdriver
 from test.utility import UtilityTool
 import unittest
-import time
 
 
 class CreateTicketTest(unittest.TestCase):
@@ -26,15 +25,9 @@ class CreateTicketTest(unittest.TestCase):
         title_text.send_keys("Created By Automation Tool - DJango4")
 
         try:
-            time.sleep(5)
-            frame = driver.find_element_by_class_name("cke_wysiwyg_frame")
-            driver.switch_to.frame(frame)
-            text_area = driver.find_element_by_xpath("/html/body/p")
+            UtilityTool.find_and_insert_in_text_area(driver, "How to automate teckiy.com using Selenium with python3.8??")
 
-            text_area.click()
-
-            text_area.send_keys("How to automate teckiy.com using Selenium with python3.8??")
-
+            # Come out of text area iFrame
             driver.switch_to.parent_frame()
 
             # Select Ticket Type : Question/Blog
@@ -53,16 +46,16 @@ class CreateTicketTest(unittest.TestCase):
             print(str(e))
             pass
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        print("------- Chrome browser closed in tearDownClass method ------")
+        @classmethod
+        def tearDownClass(cls):
+            cls.driver.quit()
+            print("------- Chrome browser closed in tearDownClass method ------")
 
-    def tearDown(self):
-        self.driver.back()
-        UtilityTool.test_sign_out(self.driver)
-        print("Navigating back in tearDown method")
+        def tearDown(self):
+            self.driver.back()
+            UtilityTool.test_sign_out(self.driver)
+            print("Navigating back in tearDown method")
 
+    if __name__ == "__main__":
+        unittest.main()
 
-if __name__ == "__main__":
-    unittest.main()

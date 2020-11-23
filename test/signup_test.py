@@ -16,6 +16,7 @@ class SignupTest(unittest.TestCase):
         driver.get("https://teckiydev.herokuapp.com/")
         print("Opened teckiydev.herokuapp.com in setUp method")
 
+
     def test_signup_with_username_password(self):
         driver = self.driver
         # Find the signup button by xpath and click
@@ -26,9 +27,9 @@ class SignupTest(unittest.TestCase):
 
         UtilityTool.switch_to_new_window(driver)
 
-        # button = driver.find_element_by_xpath('/html/body/div[1]/div[1]/div/div[2]/div/div[2]/form/div[3]/button')
-        # button.click()
 
+        # button.click()
+        # button = driver.find_element_by_xpath('/html/body/div[1]/div[1]/div/div[2]/div/div[2]/form/div[3]/button')
         # fill username in the box
         username = driver.find_element_by_xpath("//*[@id=\"id_email\"]")
         username.clear()

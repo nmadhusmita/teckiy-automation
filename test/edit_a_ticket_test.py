@@ -39,15 +39,9 @@ class EditATicketTest(unittest.TestCase):
         title_text.send_keys("Created By Automation Tool - DJango")
 
         try:
-            time.sleep(5)
-            frame = driver.find_element_by_class_name("cke_wysiwyg_frame")
-            driver.switch_to.frame(frame)
-            text_area = driver.find_element_by_xpath("/html/body/p")
+            UtilityTool.find_and_insert_in_text_area(driver, " How to automate teckiy.com ????")
 
-            text_area.click()
-
-            text_area.send_keys(" How to automate teckiy.com ????")
-
+            # Come out of text area iFrame
             driver.switch_to.parent_frame()
 
             # Select Ticket Type : Question/Blog

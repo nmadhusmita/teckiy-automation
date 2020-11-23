@@ -33,16 +33,11 @@ class SubmitAnAnswerTestFF(unittest.TestCase):
         search_result_link = driver.find_element_by_xpath("/html/body/div[1]/div[3]/div[1]/div[2]/div[2]/a")
         search_result_link.click()
         try:
-            import time
-            time.sleep(2)
-            frame = driver.find_element_by_class_name("cke_wysiwyg_frame")
-            driver.switch_to.frame(frame)
-            text_area = driver.find_element_by_xpath("/html/body/p")
+            UtilityTool.find_and_insert_in_text_area(driver, " Answer from automation code")
 
-            text_area.click()
-
-            text_area.send_keys("Comment from automation code")
+            # Come out of text area iFrame
             driver.switch_to.parent_frame()
+
             driver.find_element_by_id("commentmsgtest").click()
             assert True
             print("-- Successfully added a comment in a link")
