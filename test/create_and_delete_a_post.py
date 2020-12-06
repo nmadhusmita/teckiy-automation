@@ -6,7 +6,7 @@ import unittest
 class CreateAndDeleteABlogTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome(executable_path=r'D:\\Code\\chromedriver87\\chromedriver.exe')
+        cls.driver = webdriver.Chrome(executable_path=r'D:\\Code\\chromedriver\\chromedriver.exe')
 
     def setUp(self):
         UtilityTool.login(self.driver)

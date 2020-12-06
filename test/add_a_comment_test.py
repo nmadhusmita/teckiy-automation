@@ -7,7 +7,7 @@ class AddACommentTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome(executable_path=r'D:\\Code\\chromedriver85\\chromedriver.exe')
+        cls.driver = webdriver.Chrome(executable_path=r'D:\\Code\\chromedriver\\chromedriver.exe')
         print("******** Chrome browser opened in setUpClass method ********")
 
     def setUp(self):
